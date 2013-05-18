@@ -1,0 +1,3 @@
+[submodule "demos/scrubbing-budget"]
+	path = demos/scrubbing-budget
+	url = git@github.com:asolove/scrubbing-budget.git
