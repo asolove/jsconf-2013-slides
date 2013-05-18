@@ -31,43 +31,44 @@
 	<h2>Relations, not procedures</h2>
 </div>
 <hr>
-<div class="slide-layout-title">
-	<h1>Title</h1>
-	<h2>With Subtitle</h2>
+<div>
+	<h1>Addition procedure</h1>
+	<pre>
+		123
+		+ 4
+		---
+	</pre>
 </div>
 <hr>
 <div>
-	<h1>Title</h1>
-	<h2>Subtitle</h2>
-	<p>This is a slide with title, subtitle, and some paragraph text. This slide uses a different layout that shifts everything upward to account for the paragraph text.</p>
+	<h1>Addition relation</h1>
+	<pre>Forwards: 2 + 3 = x</pre>
+	<pre>Backwards: x + 3 = 5</pre>
+	<pre>Relation: x + y = 5</pre>
+	<pre>Test: 2 + 3 = 6 => false</pre>
 </div>
 <hr>
 <div>
-	<h1>Title</h1>
-	<h2>Subtitle and Bullets</h2>
+	<h1>Cassowary</h1>
 	<ul>
-		<li>Titles, and paragraph text are just HTML elements</li>
-		<ul>
-			<li>e.g. <code>h1</code>, <code>h2</code>, <code>p</code></li>
-		</ul>
-		<li>Bullets, of course</li>
-		<ul>
-			<li>nest,</li>
-			<ul>
-				<li>as you'd expect</li>
-			</ul>
-		</ul>
+		<li>Only works on linear equations
+		<li>API designed for UI applications
+		<li>Very fast
+		<li><a href="https://github.com/slightlyoff/cassowary-js-refactor">Alex Russell's fork</a> works in node or the browser.
 	</ul>
 </div>
 <hr>
 <div>
-	<h1>Links</h1>
-	<p>Since it's HTML, linking is easy, and means you don't have to jump out of Powerpoint or Keynote to view the link.  The back button works, too ... <a href="http://google.com/">try it</a></p>
-</div>
-<hr>
-<div>
-	<h1>More Links</h1>
-	<p>You can link to other slides, too, and the back button will still work like you think it should.  <a href="#11">Try it</a>.</p>
+	<h1>Cassowary API</h1>
+	<pre>
+		var solver = new c.SimplexSolver();
+		var spending = new c.Variable({ name: "spending", value: 3598 });
+		var revenues = new c.Variable({ name: "revenues", value: 2328 });
+		var deficit = new c.Variable({ name: "deficit"});
+		var balance = new c.Equation(c.minus(spending, revenues), deficit, c.Strength.required, 0),
+		solver.addConstraint(balance);
+	</pre>
+
 </div>
 <hr>
 <div>
