@@ -7,6 +7,7 @@
 @import "../basic.css";
 
 html {
+	font-size: 66%;
 	background: #000;
 	background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 1000, from(#222), to(#000));
 	background-image: -moz-radial-gradient(center 45deg, circle closest-side, #222 0, #000 1000px);

@@ -4,6 +4,8 @@ define([
 		'app/hc/slides/PresentationController',
 		'css!themes/black/theme.css',
 		'css!themes/fade.css',
+		'css!lib/google-code-prettify/sunburst.css',
+		'lib/google-code-prettify/prettify',
 		'domReady!'
 	],
 	function(Model, View, Controller) {
@@ -15,6 +17,7 @@ define([
 
 		controller.start().then(function() {
 			document.body.className = '';
+			prettyPrint();
 		});
 	}
 );

@@ -17,13 +17,13 @@
 </div>
 <hr>
 <div>
-	<h1>How?</h1>
-	<ul>
+	<h1>Outline</h1>
+	<ol>
 		<li>Constraint programming
 		<li>Cassowary for linear constraints
 		<li>Other constraint solvers
 		<li>Constraints as a meta-model
-	</ul>
+	</ol>
 </div>
 <hr>
 <div>
@@ -59,65 +59,70 @@
 </div>
 <hr>
 <div>
-	<h1>Cassowary API</h1>
-	<pre>
-		var solver = new c.SimplexSolver();
-		var spending = new c.Variable({ name: "spending", value: 3598 });
-		var revenues = new c.Variable({ name: "revenues", value: 2328 });
-		var deficit = new c.Variable({ name: "deficit"});
-		var balance = new c.Equation(c.minus(spending, revenues), deficit, c.Strength.required, 0),
-		solver.addConstraint(balance);
+	<h1>Cassowary relations</h1>
+	<pre class="prettyprint lang-js">var solver = new c.SimplexSolver();
+
+var spending = new c.Variable({ value: 3598 });
+var revenues = new c.Variable({ value: 2328 });
+var deficit = new c.Variable({});
+
+var balance = new c.Equation(
+  c.minus(spending, revenues), 
+  deficit, 
+  c.Strength.required, 0);
+
+solver.addConstraint(balance);
 	</pre>
 
 </div>
 <hr>
 <div>
-	<h1>Layouts</h1>
-	<h2>Just use CSS</h2>
-	<ul>
-		<li>Layouts are just CSS classes</li>
-		<ul>
-			<li>e.g. <code>slide-layout-title</code></li>
-		</ul>
-		<li>There are a few built-in, as you've seen</li>
-		<li>You can define your own</li>
-	</ul>
+	<h1>Cassowary interaction</h1>
+	<pre class="prettyprint lang-js">
+// begin to edit
+solver.addEditVar(spending, c.Strength.high).beginEdit();
+
+// make an edit
+solver.suggestValue(spending, 3400).resolve();
+
+// finish editing
+solver.endEdit();
+
+// lock a variable in place
+solver.addConstraint(
+  new c.StayConstraint(spending, 
+                       c.Strength.required, 
+                       spending.value));</pre>
+
 </div>
 <hr>
 <div>
-	<h1>Themes</h1>
-	<h2>You guessed it, CSS</h2>
-	<ul>
-		<li>Themes are also CSS classes</li>
-		<li>You're looking at the 'gray' theme right now</li>
-		<li>You can, of course, define your own</li>
-	</ul>
+	<h1>What we've achieved</h1>
+	<p>The simplest relation</p>
+	<br>
+	<iframe src="demos/scrubbing-budget/overview.html" height="300" width="1000"></iframe>
 </div>
 <hr>
 <div>
-	<h1>Transitions</h1>
-	<h2>CSS again!</h2>
-	<ul>
-		<li>Slide transitions are defined using CSS3</li>
-		<li>This presentation uses the 'fade' transition</li>
-		<li>Can be integrated into a theme or mixed-and-matched</li>
-		<li>And yep, you can define your own</li>
-	</ul>
-</div>
-<hr>
-<div>
-	<h1>Mobile</h1>
-	<h2>Landscape, portrait, touch, swipe</h2>
-	<p>It has mobile viewport support in the builtin template and themes, plus touch and swipe event support for navigation.</p>
-</div>
-<hr>
-<div>
-	<h1>Engineered</h1>
-	<h2>MVC, OOCSS, and AMD</h2>
-	<p>Cutting edge tech, packaged for simplicity.  Use it out of the box, or drop in code for your own slide models, views, and controllers.</p>
-</div>
-<hr>
-<div class="slide-layout-title">
-	<h1>Get it</h1>
-	<h2>Now available on <a href="https://github.com/briancavalier/slides">github</a></h2>
+	<h1>Complex relations</h1>
+		<pre class="prettyprint lang-js">
+var taxRates = [10, 15, 25, 28, 33, 35, 39.6];
+var dollarsAtRate = [1, 2, 3, 4, 5, 6, 13];
+
+c("taxRate0>=0");
+c("taxRate6<=100");
+
+taxRates.forEach(function(rate, i){
+  c("taxRate#{i}==#{rate}", "medium");
+  c("taxRate#{i}<=taxRate#{i+1}");
+  c("taxRevenue#{i}==taxRate#{i}*#{dollarsAtRate[i]}");
+});
+
+c("incomeTax==" +
+  taxRates.map(function(rate,i){ 
+    return "taxRevenue"+i; 
+  }).join("+"));
+
+</pre>
+
 </div>

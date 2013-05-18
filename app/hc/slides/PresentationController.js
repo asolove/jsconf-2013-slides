@@ -148,6 +148,7 @@ define([], function() {
 	*/
 	function success(result) {
 		setHash(result.slide);
+		prettyPrint();
 	}
 
 	/*
