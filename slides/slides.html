@@ -59,6 +59,23 @@
 </div>
 <hr>
 <div>
+	<h1>Cassowary API</h1>
+	<pre class="prettyprint lang-js">
+// Variables
+var spending = new c.Variable({ value: 3598 });
+
+// Expressions
+var foo = c.plus(10, c.times(3, bar));
+
+// Strengths
+c.Strength.low, c.Strength.high, c.Strength.required // ...
+
+// Equation
+new c.Equation(foo, 14, c.Strength.required, 0);
+	</pre>
+</div>
+<hr>
+<div>
 	<h1>Cassowary relations</h1>
 	<pre class="prettyprint lang-js">var solver = new c.SimplexSolver();
 
@@ -104,13 +121,6 @@ solver.addConstraint(
 </div>
 <hr>
 <div>
-	<h1>Why the api is good</h1>
-	<p>Introduce string api</p>
-	<p>Introduce hierarchy</p>
-	<p>Minimum edit distance</p>
-</div>
-<hr>
-<div>
 	<h1>Complex relations</h1>
 		<pre class="prettyprint lang-js">
 var taxRates = [10, 15, 25, 28, 33, 35, 39.6];
@@ -131,5 +141,12 @@ c("incomeTax==" +
   }).join("+"));
 
 </pre>
-
 </div>
+
+<hr>
+<div>
+	<h1>What we've achieved</h1>
+
+	<iframe src="demos/scrubbing-budget/taxes.html" height="600" width="1000"></iframe>
+</div>
+<hr>
