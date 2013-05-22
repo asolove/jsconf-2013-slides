@@ -9,6 +9,10 @@
 <hr>
 <div>
 	<h2>Skin-deep change</h2>
+
+	<iframe src="demos/scrubbing-budget/old.html" height="600" width="450"></iframe>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<iframe src="demos/scrubbing-budget/index.html" height="600" width="450"></iframe>
 </div>
 <hr>
 <div>
@@ -150,3 +154,32 @@ c("incomeTax==" +
 	<iframe src="demos/scrubbing-budget/taxes.html" height="600" width="1000"></iframe>
 </div>
 <hr>
+<div>
+	<h1>Other constraint solvers</h1>
+	<h2>People to follow, things to explore</h2>
+</div>
+<hr>
+<div>
+	<h1>Non-linear constraints</h1>
+<pre class="prettyprint lang-js">
+// keep a point on a circle: not possible with Cassowary
+"(pointX-circleX)^2+(pointY-circleY)^2==circleR^2"
+</pre>
+	<h2>Cobyla, other algorithms</h2>
+	<p>Need to be packaged for UI applications</p>
+</div>
+<hr>
+<div>
+	<h1>miniKanren / core.logic</h1>
+	<h2>Dan Friedman, William Byrd, Claire Alvis, David Nolen</h2>
+	<p>Constraint logic programming embedded into Lispy languages.</p>
+<pre class="prettyprint lang-clj">
+(run 1 [q]
+  (== q vars)
+  (everyo #(infd % (domain 1 2 3 4 5 6 7 8 9)) vars)
+  (init vars hints)
+  (everyo distinctfd rows)
+  (everyo distinctfd cols)
+  (everyo distinctfd sqs))
+</pre>
+</div>

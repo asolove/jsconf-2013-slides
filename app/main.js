@@ -6,6 +6,7 @@ define([
 		'css!themes/fade.css',
 		'css!lib/google-code-prettify/sunburst.css',
 		'lib/google-code-prettify/prettify',
+		'lib/google-code-prettify/lang-clj',
 		'domReady!'
 	],
 	function(Model, View, Controller) {
