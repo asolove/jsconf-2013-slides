@@ -1,18 +1,24 @@
 <div class="slide-layout-title">
-	<h1>Constraint programming in the browser</h1>
-	<h2><br>Adam Solove, @asolove</h2>
+	<h1>Constraint programming<br>in the browser</h1>
+	<br><br>
+	<img src="img/webs_white.png" style="float: right; height: 100px;">
+	<h2>Adam Solove<br>@asolove</h2>
 </div>
 <hr>
-<div>
-	<h2>Improving the models that power user interfaces</h2>
+<div class="slide-layout-title">
+	<h1>Improving the models that power user interfaces</h1>
 </div>
 <hr>
 <div>
 	<h2>Skin-deep change</h2>
-
+	<iframe src="demos/todocgi.html" height="600" width="450"></iframe>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<iframe src="http://todomvc.com/architecture-examples/backbone/" height="600" width="450"></iframe>
+	<!--
 	<iframe src="demos/scrubbing-budget/old.html" height="600" width="450"></iframe>
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<iframe src="demos/scrubbing-budget/index.html" height="600" width="450"></iframe>
+	-->
 </div>
 <hr>
 <div>
@@ -38,49 +44,58 @@
 <div>
 	<h1>Addition procedure</h1>
 	<pre>
-		123
-		+ 4
-		---
+
+              1    1    1
+        123  123  123  123
+        + 9  + 9  + 9  + 9
+        ---  ---  ---  ---
+               2   32  132
 	</pre>
 </div>
 <hr>
 <div>
 	<h1>Addition relation</h1>
-	<pre>Forwards: 2 + 3 = x</pre>
-	<pre>Backwards: x + 3 = 5</pre>
-	<pre>Relation: x + y = 5</pre>
+	<pre>Relation: a + b = c</pre>
+	<pre>Forwards: 2 + 3 = x => x = 5</pre>
+	<pre>Backwards: x + 3 = 5 => x = 2</pre>
+	<pre>Relation: x + y = 5 => y = -x + 5</pre>
 	<pre>Test: 2 + 3 = 6 => false</pre>
 </div>
 <hr>
 <div>
 	<h1>Cassowary</h1>
 	<ul>
-		<li>Only works on linear equations
 		<li>API designed for UI applications
-		<li>Very fast, even at scales you'll never need
-		<li><a href="https://github.com/slightlyoff/cassowary-js-refactor">Alex Russell's fork</a> works in node or the browser
+		<li>Very fast at problems larger than you'll ever need
+		<li>Alex Russell's <a href="https://github.com/slightlyoff/cassowary.js">cassowary.js</a> is easy to use in node or the browser
+		<li><strong>But:</strong> only works on linear equations
 	</ul>
 </div>
 <hr>
 <div>
-	<h1>Cassowary API</h1>
+	<h2>Cassowary powers iOS Auto Layout</h2>
+	<img src="img/Cassowary-iOS.png" height="600">
+</div>
+<hr>
+<div>
+	<h1>Cassowary.js API</h1>
 	<pre class="prettyprint lang-js">
 // Variables
-var spending = new c.Variable({ value: 3598 });
+var totalSpend = new c.Variable({ value: 3598 });
 
 // Expressions
-var foo = c.plus(10, c.times(3, bar));
-
-// Strengths
-c.Strength.low, c.Strength.high, c.Strength.required // ...
+var spendParts = c.plus(defense, nonDefense);
 
 // Equation
-new c.Equation(foo, 14, c.Strength.required, 0);
+new c.Equation(spendParts, totalSpend);
+
+// Strengths
+c.Strength.low, c.Strength.high, c.Strength.required
 	</pre>
 </div>
 <hr>
 <div>
-	<h1>Cassowary relations</h1>
+	<h1>Cassowary.js relations</h1>
 	<pre class="prettyprint lang-js">var solver = new c.SimplexSolver();
 
 var spending = new c.Variable({ value: 3598 });
@@ -98,22 +113,20 @@ solver.addConstraint(balance);
 </div>
 <hr>
 <div>
-	<h1>Cassowary interaction</h1>
+	<h1>Cassowary.js interaction</h1>
 	<pre class="prettyprint lang-js">
-// begin to edit
+// on mousedown: begin to edit
 solver.addEditVar(spending, c.Strength.high).beginEdit();
 
-// make an edit
+// on mousemove: make an edit
 solver.suggestValue(spending, 3400).resolve();
 
-// finish editing
+// on mouseup: finish editing
 solver.endEdit();
 
-// lock a variable in place
+// on click on the lock: keep a variable in place
 solver.addConstraint(
-  new c.StayConstraint(spending, 
-                       c.Strength.required, 
-                       spending.value));</pre>
+  new c.StayConstraint(spending, c.Strength.required));</pre>
 
 </div>
 <hr>
@@ -127,11 +140,11 @@ solver.addConstraint(
 <div>
 	<h1>Complex relations</h1>
 		<pre class="prettyprint lang-js">
-var taxRates = [10, 15, 25, 28, 33, 35, 39.6];
-var dollarsAtRate = [1, 2, 3, 4, 5, 6, 13];
+var taxRates = [.1, .15, .25, .28, .33, .35, .396];
+var dollarsAtRate = [1, 2, 3, 4, 5, 6, 7];
 
 c("taxRate0>=0");
-c("taxRate6<=100");
+c("taxRate6<=1");
 
 taxRates.forEach(function(rate, i){
   c("taxRate#{i}==#{rate}", "medium");
@@ -166,20 +179,59 @@ c("incomeTax==" +
 "(pointX-circleX)^2+(pointY-circleY)^2==circleR^2"
 </pre>
 	<h2>Cobyla, other algorithms</h2>
-	<p>Need to be packaged for UI applications</p>
+	<p>Need js versions, packaged for UI applications</p>
+	<p>Constraint hierarchy and minimum edit distance</p>
 </div>
 <hr>
 <div>
 	<h1>miniKanren / core.logic</h1>
-	<h2>Dan Friedman, William Byrd, Claire Alvis, David Nolen</h2>
-	<p>Constraint logic programming embedded into Lispy languages.</p>
+	<img src="img/reasoned-schemer.jpg" style="float:left;width:300px;margin-right:50px">
+	<h2>Dan Friedman, William Byrd, Oleg Kiselyov, Claire Alvis and David Nolen</h2>
+	<p>Constraint logic programming embedded into Lispy languages. core.logic works in ClojureScript, compiling to very fast JavaScript.</p>
+</div>
+<hr>
+<div>
+	<h2>Sudoku in core.logic</h2>
 <pre class="prettyprint lang-clj">
-(run 1 [q]
-  (== q vars)
-  (everyo #(infd % (domain 1 2 3 4 5 6 7 8 9)) vars)
-  (init vars hints)
-  (everyo distinctfd rows)
-  (everyo distinctfd cols)
-  (everyo distinctfd sqs))
+(defn sudokufd [hints]
+  (let [vars (repeatedly 81 lvar) 
+        rows (->> vars (partition 9) (map vec) (into []))
+        cols (apply map vector rows)
+        sqs  (for [x (range 0 9 3)
+                   y (range 0 9 3)]
+               (get-square rows x y))]
+    (run 1 [q]
+      (== q vars)
+      (everyg #(infd % (domain 1 2 3 4 5 6 7 8 9)) vars)
+      (init vars hints)
+      (everyg distinctfd rows)
+      (everyg distinctfd cols)
+      (everyg distinctfd sqs))))
 </pre>
 </div>
+<hr>
+<div>
+	<h1>core.logic is awesome!</h1>
+	<h2>But poses challenges for UI applications</h2>
+	<ul>
+		<li>Doesn't support constraint hierarchy: problem must not be over-constrained.</li>
+		<li>Doesn't know about edit distance: problem must not be under-constrained.</li>
+		<li>But we could easily layer some of these things on top of it</li>
+	</ul>
+</div>
+<hr>
+<div>
+	<h1>Viewpoints Research Institute (Alan Kay)</h1>
+	<h2>Cooperating solvers</h2>
+	<p>How could constraint solvers, dataflow, and other types of powerful problem models work together?</p>
+	<h2>OMeta</h2>
+	<p>Can you write a single meta-language to bootstrap other languages to write a complete kernel, OS, and GUI user applications in 10k lines of code?</p>
+	<h2><a href="http://www.vpri.org/">vpri.org</a></h2>
+</div>
+<hr>
+<div>
+	<h2>Bonus!</h2>
+	<h1>Constraints as a meta-model</h1>
+	<p>Bret Victor's scrubbing calculator is a great model for giving users the power of constraints to solve their own problems.</p>
+	<br><br>
+	<iframe src="demos/scrubbing-linear-calculator/public/index.html" height="200" width="900"></iframe>
