@@ -1,3 +1,6 @@
 [submodule "demos/scrubbing-budget"]
 	path = demos/scrubbing-budget
 	url = git@github.com:asolove/scrubbing-budget.git
+[submodule "demos/scrubbing-linear-calculator"]
+	path = demos/scrubbing-linear-calculator
+	url = git@github.com:asolove/scrubbing-linear-calculator.git
